@@ -2,12 +2,21 @@
 
 ## ⚠️ 重要前提
 
-本工具**必須配合 GitHub Copilot CLI 使用**。
+本工具**必須配合 AI 終端機助手使用**。
 
-### 為什麼需要 Copilot？
+### 支援的 AI CLI 工具
 
-| 任務 | 自動化腳本 | Copilot AI |
-|------|------------|------------|
+| 工具 | 安裝方式 | 免費額度 |
+|------|----------|----------|
+| **Gemini CLI** | `npm i -g @google/gemini-cli` | 1000 次/天 |
+| **GitHub Copilot** | 內建於 GitHub CLI | 依訂閱方案 |
+| **OpenAI Codex** | `npm i -g @openai/codex` | 依 ChatGPT 方案 |
+| **Claude Code** | `curl -fsSL https://claude.ai/install.sh \| bash` | 依訂閱方案 |
+
+### 為什麼需要 AI CLI？
+
+| 任務 | 自動化腳本 | AI CLI |
+|------|------------|--------|
 | PDF → Markdown | ✅ markitdown | - |
 | 圖片提取 | ✅ PyMuPDF | - |
 | 裝飾圖過濾 | ✅ 腳本過濾 | - |
@@ -28,11 +37,25 @@
 
 ### 方法一：一鍵指令（推薦）
 
-將 PDF 檔案放入工作資料夾後，對 Copilot CLI 說：
+將 PDF 檔案放入工作資料夾後，啟動任一 AI CLI：
 
-```
-@your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁，
-參考 CODELABS_SDD.md 規格和 templates/ 模板
+```bash
+# Gemini CLI（免費推薦）
+gemini
+> @your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁，
+> 參考 CODELABS_SDD.md 規格和 templates/ 模板
+
+# GitHub Copilot
+copilot
+> @your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁
+
+# OpenAI Codex
+codex
+> @your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁
+
+# Claude Code
+claude
+> @your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁
 ```
 
 或更詳細的指令：
@@ -46,14 +69,14 @@
 5. 識別提示詞並添加顏色標籤（Persona/Task/Context/Format）
 ```
 
-### 方法二：腳本 + Copilot（更可靠）
+### 方法二：腳本 + AI CLI（更可靠）
 
 ```bash
 # 步驟 1：執行預處理腳本
 ./convert_to_codelabs.sh your-file.pdf
 
-# 步驟 2：啟動 Copilot 完成 HTML
-copilot
+# 步驟 2：啟動任一 AI CLI 完成 HTML
+gemini  # 或 copilot / codex / claude
 > 請根據 CODELABS_SDD.md 將 your-file.md 製作成 Codelabs 網頁
 ```
 
@@ -68,7 +91,27 @@ copilot
 | Python 3.8+ | 執行轉換腳本 | 系統內建或 `brew install python` |
 | markitdown | PDF 轉 Markdown | `pip install markitdown` |
 | pymupdf | 圖片提取 | `pip install pymupdf` |
-| pdfimages | 備用圖片提取 | `brew install poppler` |
+| AI CLI | HTML 生成 | 見下方 |
+
+### AI CLI 工具安裝（選一個）
+
+```bash
+# Gemini CLI（推薦，免費 1000 次/天）
+npm i -g @google/gemini-cli
+
+# OpenAI Codex CLI
+npm i -g @openai/codex
+# 或
+brew install --cask codex
+
+# Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
+# 或
+brew install --cask claude-code
+
+# GitHub Copilot（內建於 GitHub CLI）
+gh extension install github/gh-copilot
+```
 
 ### 自動安裝腳本
 
@@ -219,7 +262,7 @@ your-project/
 
 ## 📊 品質檢查清單
 
-轉換完成後，請 Copilot 執行檢查：
+轉換完成後，請 AI CLI 執行檢查：
 
 ```
 請檢查生成的 Codelabs 網頁：
@@ -256,5 +299,6 @@ your-project/
 
 ---
 
-*使用手冊版本：1.0*
+*使用手冊版本：1.1*
 *最後更新：2026-02-04*
+*支援工具：Gemini CLI / Copilot / Codex / Claude Code*
