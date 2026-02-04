@@ -1,5 +1,23 @@
 # PDF 轉 Codelabs 網頁使用手冊
 
+## ⚠️ 重要前提
+
+本工具**必須配合 GitHub Copilot CLI 使用**。
+
+### 為什麼需要 Copilot？
+
+| 任務 | 自動化腳本 | Copilot AI |
+|------|------------|------------|
+| PDF → Markdown | ✅ markitdown | - |
+| 圖片提取 | ✅ PyMuPDF | - |
+| 裝飾圖過濾 | ✅ 腳本過濾 | - |
+| 章節拆分 | ❌ | ✅ 語義分析 |
+| 顏色標籤識別 | ❌ | ✅ 語義分析 |
+| HTML 生成 | ❌ | ✅ 根據規格生成 |
+| 圖片位置對應 | ❌ | ✅ 內容理解 |
+
+---
+
 ## 🎯 快速開始
 
 將任何 PDF 文件轉換為 Google Codelabs 風格的互動式教學網頁。
@@ -13,7 +31,8 @@
 將 PDF 檔案放入工作資料夾後，對 Copilot CLI 說：
 
 ```
-@your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁
+@your-file.pdf 請將此 PDF 轉換為 Codelabs 互動式教學網頁，
+參考 CODELABS_SDD.md 規格和 templates/ 模板
 ```
 
 或更詳細的指令：
@@ -21,26 +40,21 @@
 ```
 @your-file.pdf 請執行以下任務：
 1. 將 PDF 轉換為 Markdown
-2. 分析內容結構，拆分為適當章節
-3. 製作成 Google Codelabs 風格的互動式 HTML 網頁
-4. 提取 PDF 中的圖片並放入 images/ 資料夾
-5. 如果 PDF 有顏色標記的文字，保留顏色樣式
+2. 使用 PyMuPDF 提取圖片（過濾 255KB 裝飾圖）
+3. 分析內容結構，拆分為適當章節
+4. 根據 CODELABS_SDD.md 製作互動式 HTML
+5. 識別提示詞並添加顏色標籤（Persona/Task/Context/Format）
 ```
 
-### 方法二：分步驟執行
+### 方法二：腳本 + Copilot（更可靠）
 
-```
-# 步驟 1：轉換 PDF 為 Markdown
-@your-file.pdf 使用 markitdown 將此 PDF 轉換為 Markdown
+```bash
+# 步驟 1：執行預處理腳本
+./convert_to_codelabs.sh your-file.pdf
 
-# 步驟 2：建立 Codelabs HTML
-請將轉換後的 Markdown 製作成 Codelabs 互動式網頁
-
-# 步驟 3：提取圖片
-使用 pdfimages 或 pymupdf 從 PDF 提取圖片到 images/ 資料夾
-
-# 步驟 4：整理和驗證
-檢查所有圖片連結是否正確，移除無用檔案
+# 步驟 2：啟動 Copilot 完成 HTML
+copilot
+> 請根據 CODELABS_SDD.md 將 your-file.md 製作成 Codelabs 網頁
 ```
 
 ---
