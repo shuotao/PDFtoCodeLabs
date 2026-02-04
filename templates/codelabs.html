@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - Codelabs</title>
+    <link rel="stylesheet" href="codelabs.css">
+</head>
+<body>
+    <div class="codelab-container">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>{{TITLE}}</h1>
+                <p class="subtitle">{{SUBTITLE}}</p>
+            </div>
+            <nav class="chapter-nav">
+                <ul id="chapter-list">
+                    <!-- 動態生成章節列表 -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 主內容區 -->
+        <main class="content">
+            <!-- 導航列 -->
+            <div class="navigation-bar">
+                <button onclick="prevChapter()" id="prev-btn">⬅️ 上一章</button>
+                <span class="progress-indicator">1 / {{TOTAL_CHAPTERS}}</span>
+                <button onclick="nextChapter()" id="next-btn">下一章 ➡️</button>
+            </div>
+
+            <!-- 章節內容 -->
+            <div id="chapters-container">
+                {{CHAPTERS_CONTENT}}
+            </div>
+
+            <!-- 底部導航 -->
+            <div class="navigation-bar bottom">
+                <button onclick="prevChapter()" id="prev-btn-bottom">⬅️ 上一章</button>
+                <span class="progress-indicator">1 / {{TOTAL_CHAPTERS}}</span>
+                <button onclick="nextChapter()" id="next-btn-bottom">下一章 ➡️</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="codelabs.js"></script>
+</body>
+</html>
